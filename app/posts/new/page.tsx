@@ -1,6 +1,7 @@
 import React from 'react'
+
 const page = () => {
-  return <>Hey</>
+  return <>NEW POST</>
 }
 
 export default page
