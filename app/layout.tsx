@@ -1,5 +1,7 @@
 import '@styles/globals.css'
 import { ReactNode } from 'react'
+import Nav from '@components/Nav'
+import Provider from '@components/Provider'
 
 export const metadata = {
   title: 'Promptopia',
@@ -17,7 +19,10 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <div className="main">
           <div className="gradient" />
         </div>
-        <main className="app">{children}</main>
+        <main className="app">
+          <Nav />
+          {children}
+        </main>
       </body>
     </html>
   )

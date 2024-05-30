@@ -1,5 +1,5 @@
 const Feed = () => {
-  return <section className="w-full flex-center flex-col"></section>
+  return <div className="">Feed</div>
 }
 
 export default Feed
