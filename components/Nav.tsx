@@ -14,6 +14,7 @@ import { BuiltInProviderType } from 'next-auth/providers/index'
 
 const Nav = () => {
   const isUserLoggedIn = true
+  const [toggleDropdown, setToggleDropdown] = useState(false)
 
   const [providers, setProviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
@@ -87,8 +88,19 @@ const Nav = () => {
               height={37}
               className="rounded-full"
               alt="profile"
-              // onClick={}
+              onClick={() => setToggleDropdown((prev) => !prev)}
             />
+            {toggleDropdown && (
+              <div className="dropdown">
+                <Link
+                  href="/profile"
+                  className="dropdown_link"
+                  onClick={() => setToggleDropdown(false)}
+                >
+                  My Profile
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
           <>
