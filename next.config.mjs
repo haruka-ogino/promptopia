@@ -1,14 +1,7 @@
-import { NextConfig } from 'next'
-
-interface ExtendedNextConfig extends NextConfig {
-  experimental: NextConfig['experimental'] & {
-    appDir?: boolean
-  }
-}
-
-const nextConfig: ExtendedNextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   experimental: {
-    appDir: true,
+    // appDir: true,
     serverComponentsExternalPackages: ['mongoose'],
   },
   images: {
