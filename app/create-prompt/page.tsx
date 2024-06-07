@@ -13,7 +13,29 @@ const CreatePrompt = () => {
     tag: '',
   })
 
-  async function createPrompt(e: ChangeEvent<HTMLTextAreaElement>) {}
+  async function createPrompt(e: ChangeEvent<HTMLTextAreaElement>) {
+    e.preventDefault()
+    setSubmitting(true)
+
+    try {
+      const res = await fetch('/api/prompt/new', {
+        method: 'POST',
+        body: JSON.stringify({
+          prompt: post.prompt,
+          userId: session?.user.id,
+          tag: post.tag,
+        }),
+      })
+
+      if (res.ok) {
+        Router.push('/')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <Form
