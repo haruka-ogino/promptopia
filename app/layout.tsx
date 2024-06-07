@@ -16,7 +16,8 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <Provider children={undefined} session={undefined}>
+        <Provider children={undefined}>
+          // session={undefined}
           <div className="main">
             <div className="gradient" />
           </div>
