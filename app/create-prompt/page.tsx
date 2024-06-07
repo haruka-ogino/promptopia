@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation'
 import Form from '@components/Form'
 
 const CreatePrompt = () => {
+  const router = useRouter()
+  const { data: session } = useSession()
+
   const [submitting, setSubmitting] = useState(false)
   const [post, setPost] = useState({
     prompt: '',
@@ -18,11 +21,16 @@ const CreatePrompt = () => {
     setSubmitting(true)
 
     try {
+      if (!session || !session.user || !session.user.id) {
+        console.log('User session is not available')
+        setSubmitting(false)
+        return
+      }
       const res = await fetch('/api/prompt/new', {
         method: 'POST',
         body: JSON.stringify({
           prompt: post.prompt,
-          userId: session?.user.id,
+          userId: session.user.id,
           tag: post.tag,
         }),
       })
