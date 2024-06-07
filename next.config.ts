@@ -1,5 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import { NextConfig } from 'next'
+
+interface ExtendedNextConfig extends NextConfig {
+  experimental: NextConfig['experimental'] & {
+    appDir?: boolean
+  }
+}
+
+const nextConfig: ExtendedNextConfig = {
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: ['mongoose'],
@@ -16,4 +23,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+export default nextConfig
