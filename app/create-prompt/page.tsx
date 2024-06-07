@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
@@ -13,7 +13,7 @@ const CreatePrompt = () => {
     tag: '',
   })
 
-  async function createPrompt(e) {}
+  async function createPrompt(e: ChangeEvent<HTMLTextAreaElement>) {}
 
   return (
     <Form
