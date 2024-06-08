@@ -4,9 +4,10 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
+import { IPrompt } from '@models/prompt'
 
 interface Params {
-  post: string
+  post: IPrompt
   desc: string
   handleTagClick: (any: any) => void
   handleEdit: (any: any) => void
@@ -77,8 +78,8 @@ const PromptCard = ({
         {post.tag}
       </p>
 
-      {session?.user?.id === post.creator.id && pathName === '/profile' && (
-        <div>
+      {session?.user?.id === post.creator._id && pathName === '/profile' && (
+        <div className="mt-5 flex-center gap-4 border-t border-grey-100 pt-3">
           <p
             className="font-inter text-sm green_gradient cursor-pointer"
             onClick={handleEdit}
