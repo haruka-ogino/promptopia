@@ -1,6 +1,6 @@
 import { Model, Schema, model, models } from 'mongoose'
 
-interface IPrompt extends Document {
+export interface IPrompt extends Document {
   creator: Schema.Types.ObjectId
   prompt: string
   tag: string

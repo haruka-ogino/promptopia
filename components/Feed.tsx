@@ -3,8 +3,25 @@
 import { useState, useEffect } from 'react'
 import PromptCard from './PromptCard'
 import Prompt from '@models/prompt'
+import { IPrompt } from '@models/prompt'
 
-const PromptCardList = ({ data: Prompt[], handleTagClick }) => {}
+interface Params {
+  data: IPrompt[]
+}
+
+const PromptCardList = ({ data, handleTagClick }: Params) => {
+  return (
+    <div>
+      {data.map((post) => (
+        <PromptCard
+          key={post._id}
+          post={post}
+          handleTagClick={handleTagClick}
+        />
+      ))}
+    </div>
+  )
+}
 
 const Feed = () => {
   const [searchText, setSearchText] = useState('')
