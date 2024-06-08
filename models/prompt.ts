@@ -6,6 +6,11 @@ export interface IPrompt extends Document {
   tag: string
 }
 
+export interface Post extends IPrompt {
+  _id: {}
+  __v: number
+}
+
 const PromptSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
