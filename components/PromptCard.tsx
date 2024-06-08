@@ -5,7 +5,24 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 
-const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+interface Params {
+  post: string
+  desc: string
+  handleTagClick: (any: any) => void
+  handleEdit: (any: any) => void
+  handleDelete: Promise<(any: any) => void>
+}
+
+const PromptCard = ({
+  post,
+  handleTagClick,
+  handleEdit,
+  handleDelete,
+}: Params) => {
+  const { data: session } = useSession()
+  const pathName = usePathname()
+  const router = useRouter()
+
   const [copied, setCopied] = useState('')
 
   function handleCopy() {
@@ -59,6 +76,23 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       >
         {post.tag}
       </p>
+
+      {session?.user?.id === post.creator.id && pathName === '/profile' && (
+        <div>
+          <p
+            className="font-inter text-sm green_gradient cursor-pointer"
+            onClick={handleEdit}
+          >
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm orange_gradient cursor-pointer"
+            onClick={handleDelete}
+          >
+            Edit
+          </p>
+        </div>
+      )}
     </div>
   )
 }
