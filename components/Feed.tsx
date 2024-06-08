@@ -12,7 +12,7 @@ interface Params {
 
 const PromptCardList = ({ data, handleTagClick }: Params) => {
   return (
-    <div>
+    <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard
           key={post._id}
