@@ -7,6 +7,7 @@ import { IPrompt } from '@models/prompt'
 
 interface Params {
   data: IPrompt[]
+  handleTagClick: () => void
 }
 
 const PromptCardList = ({ data, handleTagClick }: Params) => {
@@ -47,6 +48,7 @@ const Feed = () => {
           placeholder="Search for a tag or username"
           value={searchText}
           onChange={handleSearchChange}
+          className="search_input peer"
           required
         />
       </form>
