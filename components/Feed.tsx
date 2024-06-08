@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import PromptCard from './PromptCard'
+import Prompt from '@models/prompt'
 
-const PromptCardList = ({ data, handleTagClick }) => {}
+const PromptCardList = ({ data: Prompt[], handleTagClick }) => {}
 
 const Feed = () => {
   const [searchText, setSearchText] = useState('')
+  const [posts, setPosts] = useState([])
 
   function handleSearchChange(e) {}
 
@@ -14,8 +16,11 @@ const Feed = () => {
     const fetchPosts = async () => {
       const res = await fetch('api/prompt')
       const data = await res.json()
+
+      setPosts(data)
     }
-  })
+    fetchPosts()
+  }, [])
 
   return (
     <section className="feed">
@@ -30,7 +35,7 @@ const Feed = () => {
       </form>
 
       {/* component below will only be used inside this component so it can be created here */}
-      <PromptCardList data={[]} handleTagClick={() => {}} />
+      <PromptCardList data={posts} handleTagClick={() => {}} />
     </section>
   )
 }
