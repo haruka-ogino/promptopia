@@ -2,7 +2,7 @@ import { connectToDB } from '@utils/database'
 import Prompt from '@models/prompt'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 
-export const Get = async (req: Request, { params }: Params) => {
+export const GET = async (req: Request, { params }: Params) => {
   try {
     await connectToDB()
     const prompts = await Prompt.find({ creator: params.id }).populate(
