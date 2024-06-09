@@ -1,11 +1,11 @@
-import { Post } from '@models/prompt'
+import { IPrompt, Post } from '@models/prompt'
 import PromptCard from './PromptCard'
 
 interface Params {
   name: string
   desc: string
-  data: []
-  handleEdit: (any: any) => void
+  data: Post[]
+  handleEdit: (post: Post) => void
   handleDelete: (post: Post) => Promise<void>
 }
 
@@ -19,10 +19,11 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }: Params) => {
       <div className="mt-10 prompt_layout">
         {data.map((post) => (
           <PromptCard
-            key={post._id}
+            key={post._id.toString()}
             post={post}
-            handleEdit={handleEdit && handleEdit(post)}
-            handleDelete={handleDelete && handleDelete(post)}
+            handleTagClick={}
+            handleEdit={() => handleEdit(post)}
+            handleDelete={() => handleDelete(post)}
           />
         ))}
       </div>
