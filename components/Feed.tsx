@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import PromptCard from './PromptCard'
-import Prompt from '@models/prompt'
-import { IPrompt } from '@models/prompt'
+import Prompt, { Post } from '@models/prompt'
 
 interface Params {
-  data: IPrompt[]
+  data: Post[]
   handleTagClick: () => void
 }
 
@@ -28,7 +27,18 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('')
   const [posts, setPosts] = useState([])
 
-  function handleSearchChange(e) {}
+  // function handleSearchChange(e) {
+  //   clearTimeout(searchTimeout)
+  //   setSearchText(e.target.value)
+
+  //   // debounce method
+  //   setSearchTimeout(
+  //     setTimeout(() => {
+  //       const searchResult = filterPrompts(e.target.value)
+  //       setSearchedResults(searchResult)
+  //     }, 500)
+  //   )
+  // }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -47,7 +57,7 @@ const Feed = () => {
           type="text"
           placeholder="Search for a tag or username"
           value={searchText}
-          onChange={handleSearchChange}
+          // onChange={handleSearchChange}
           className="search_input peer"
           required
         />

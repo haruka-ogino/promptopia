@@ -10,7 +10,7 @@ import { Post } from '@models/prompt'
 const MyProfile = () => {
   const router = useRouter()
 
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState<Post[]>([])
 
   const { data: session } = useSession()
 

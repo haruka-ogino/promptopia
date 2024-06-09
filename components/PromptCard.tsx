@@ -3,15 +3,17 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
-import { IPrompt } from '@models/prompt'
+import { usePathname } from 'next/navigation'
+import { Post } from '@models/prompt'
+import { IUser } from '@models/user'
+import { Schema } from 'mongoose'
 
 interface Params {
-  post: IPrompt
+  post: Post
   desc: string
-  handleTagClick: (any: any) => void
-  handleEdit: (any: any) => void
-  handleDelete: Promise<(any: any) => void>
+  handleTagClick: (tag: string) => void
+  handleEdit: (post: Post) => void
+  handleDelete: (post: Post) => Promise<void>
 }
 
 const PromptCard = ({
@@ -22,7 +24,6 @@ const PromptCard = ({
 }: Params) => {
   const { data: session } = useSession()
   const pathName = usePathname()
-  const router = useRouter()
 
   const [copied, setCopied] = useState('')
 
@@ -32,33 +33,37 @@ const PromptCard = ({
     navigator.clipboard.writeText(post.prompt)
     setTimeout(() => setCopied(''), 3000)
   }
+
+  const isCreatorPopulated = (
+    creator: IUser | Schema.Types.ObjectId
+  ): creator is IUser => {
+    return (creator as IUser).username !== undefined
+  }
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
-          <Image
-            src={post.creator.image}
-            alt="user_image"
-            width={40}
-            height={40}
-            className="rounded-full object-contain"
-          />
+        {isCreatorPopulated(post.creator) && (
+          <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+            <Image
+              src={post.creator.image}
+              alt="user_image"
+              width={40}
+              height={40}
+              className="rounded-full object-contain"
+            />
 
-          <div className="flex flex-col">
-            <h3 className="font-satoshi font-semibold text-gray-900">
-              {post.creator.username}
-            </h3>
-            <p className="font-inter text-sm text-gray-500">
-              {post.creator.email}
-            </p>
+            <div className="flex flex-col">
+              <h3 className="font-satoshi font-semibold text-gray-900">
+                {post.creator.username}
+              </h3>
+              <p className="font-inter text-sm text-gray-500">
+                {post.creator.email}
+              </p>
+            </div>
           </div>
-        </div>
-        <div
-          className="copy_btn"
-          onClick={() => {
-            handleCopy
-          }}
-        >
+        )}
+        <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={
               copied === post.prompt
@@ -79,22 +84,24 @@ const PromptCard = ({
         #{post.tag}
       </p>
 
-      {session?.user?.id === post.creator._id && pathName === '/profile' && (
-        <div className="mt-5 flex-center gap-4 border-t border-grey-100 pt-3">
-          <p
-            className="font-inter text-sm green_gradient cursor-pointer"
-            onClick={handleEdit}
-          >
-            Edit
-          </p>
-          <p
-            className="font-inter text-sm orange_gradient cursor-pointer"
-            onClick={handleDelete}
-          >
-            Edit
-          </p>
-        </div>
-      )}
+      {session?.user?.id ===
+        (isCreatorPopulated(post.creator) ? post.creator._id : '') &&
+        pathName === '/profile' && (
+          <div className="mt-5 flex-center gap-4 border-t border-grey-100 pt-3">
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer"
+              onClick={() => handleEdit(post)}
+            >
+              Edit
+            </p>
+            <p
+              className="font-inter text-sm orange_gradient cursor-pointer"
+              onClick={() => handleDelete(post)}
+            >
+              Edit
+            </p>
+          </div>
+        )}
     </div>
   )
 }
