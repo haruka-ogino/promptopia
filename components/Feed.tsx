@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import PromptCard from './PromptCard'
-import Prompt, { Post } from '@models/prompt'
+import Prompt, { IPrompt, Post } from '@models/prompt'
 
 interface Params {
   data: Post[]
@@ -24,8 +24,31 @@ const PromptCardList = ({ data, handleTagClick }: Params) => {
 }
 
 const Feed = () => {
+  const [posts, setPosts] = useState<IPrompt[]>([])
+
   const [searchText, setSearchText] = useState('')
-  const [posts, setPosts] = useState([])
+  const [searchTimeout, setSearchTimeout] = useState(null)
+  const [searchResults, setSearchResults] = useState([])
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await fetch('api/prompt')
+      const data = await res.json()
+
+      setPosts(data)
+    }
+    fetchPosts()
+  }, [])
+
+  function filterPrompts(search) {
+    const regex = new RegExp(search, 'i')
+    return posts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
+    )
+  }
 
   // function handleSearchChange(e) {
   //   clearTimeout(searchTimeout)
@@ -39,16 +62,6 @@ const Feed = () => {
   //     }, 500)
   //   )
   // }
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch('api/prompt')
-      const data = await res.json()
-
-      setPosts(data)
-    }
-    fetchPosts()
-  }, [])
 
   return (
     <section className="feed">
