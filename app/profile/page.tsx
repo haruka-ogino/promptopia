@@ -5,11 +5,12 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 import Profile from '@components/Profile'
+import { IPrompt } from '@models/prompt'
 
 const MyProfile = () => {
   const router = useRouter()
 
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<IPrompt[]>([])
 
   const { data: session } = useSession()
 
@@ -24,11 +25,11 @@ const MyProfile = () => {
     if (session?.user?.id) fetchPosts()
   }, [])
 
-  function handleEdit(post: Post) {
+  function handleEdit(post: IPrompt) {
     router.push(`/update-prompt?id=${post._id}`)
   }
 
-  async function handleDelete(post: Post) {
+  async function handleDelete(post: IPrompt) {
     const hasConfirmed = confirm('Are you sure you want to delete this prompt?')
 
     if (hasConfirmed) {
