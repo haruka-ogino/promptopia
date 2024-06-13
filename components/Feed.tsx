@@ -6,7 +6,7 @@ import Prompt, { IPrompt } from '@models/prompt'
 
 interface Params {
   data: IPrompt[]
-  handleTagClick: () => void
+  handleTagClick: (tagName: string) => void
 }
 
 const PromptCardList = ({ data, handleTagClick }: Params) => {
@@ -14,7 +14,7 @@ const PromptCardList = ({ data, handleTagClick }: Params) => {
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard
-          key={post._id}
+          key={post._id.toString()}
           post={post}
           handleTagClick={handleTagClick}
         />
@@ -64,6 +64,13 @@ const Feed = () => {
     )
   }
 
+  const handleTagClick = (tagName: string) => {
+    setSearchText(tagName)
+
+    const searchResult = filterPrompts(tagName)
+    setSearchResults(searchResult)
+  }
+
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -78,7 +85,7 @@ const Feed = () => {
       </form>
 
       {/* component below will only be used inside this component so it can be created here */}
-      <PromptCardList data={posts} handleTagClick={() => {}} />
+      <PromptCardList data={posts} handleTagClick={handleTagClick} />
     </section>
   )
 }

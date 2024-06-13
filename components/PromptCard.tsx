@@ -10,7 +10,7 @@ import { IPrompt } from '@models/prompt'
 
 interface Params {
   post: IPrompt
-  desc: string
+  desc?: string
   handleTagClick?: (tag: string) => void
   handleEdit?: (post: IPrompt) => void
   handleDelete?: (post: IPrompt) => Promise<void>
@@ -88,18 +88,22 @@ const PromptCard = ({
         (isCreatorPopulated(post.creator) ? post.creator._id : '') &&
         pathName === '/profile' && (
           <div className="mt-5 flex-center gap-4 border-t border-grey-100 pt-3">
-            <p
-              className="font-inter text-sm green_gradient cursor-pointer"
-              onClick={() => handleEdit(post)}
-            >
-              Edit
-            </p>
-            <p
-              className="font-inter text-sm orange_gradient cursor-pointer"
-              onClick={() => handleDelete(post)}
-            >
-              Edit
-            </p>
+            {handleEdit && (
+              <p
+                className="font-inter text-sm green_gradient cursor-pointer"
+                onClick={() => handleEdit(post)}
+              >
+                Edit
+              </p>
+            )}
+            {handleDelete && (
+              <p
+                className="font-inter text-sm orange_gradient cursor-pointer"
+                onClick={() => handleDelete(post)}
+              >
+                Delete
+              </p>
+            )}
           </div>
         )}
     </div>
