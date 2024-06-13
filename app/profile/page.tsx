@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 import Profile from '@components/Profile'
-import { Post } from '@models/prompt'
 
 const MyProfile = () => {
   const router = useRouter()

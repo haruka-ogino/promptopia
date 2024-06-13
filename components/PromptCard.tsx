@@ -11,9 +11,9 @@ import { IPrompt } from '@models/prompt'
 interface Params {
   post: IPrompt
   desc: string
-  handleTagClick: (tag: string) => void
-  handleEdit: (post: IPrompt) => void
-  handleDelete: (post: IPrompt) => Promise<void>
+  handleTagClick?: (tag: string) => void
+  handleEdit?: (post: IPrompt) => void
+  handleDelete?: (post: IPrompt) => Promise<void>
 }
 
 const PromptCard = ({

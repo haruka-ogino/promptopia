@@ -25,7 +25,6 @@ const PromptCardList = ({ data, handleTagClick }: Params) => {
 
 const Feed = () => {
   const [posts, setPosts] = useState<IPrompt[]>([])
-
   const [searchText, setSearchText] = useState('')
   const [searchTimeout, setSearchTimeout] = useState<number | undefined>(
     undefined

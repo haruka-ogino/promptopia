@@ -1,12 +1,12 @@
-import { IPrompt, Post } from '@models/prompt'
+import { IPrompt } from '@models/prompt'
 import PromptCard from './PromptCard'
 
 interface Params {
   name: string
   desc: string
-  data: Post[]
-  handleEdit: (post: Post) => void
-  handleDelete: (post: Post) => Promise<void>
+  data: IPrompt[]
+  handleEdit: (post: IPrompt) => void
+  handleDelete: (post: IPrompt) => Promise<void>
 }
 
 const Profile = ({ name, desc, data, handleEdit, handleDelete }: Params) => {
