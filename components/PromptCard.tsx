@@ -4,16 +4,16 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
-import { Post } from '@models/prompt'
 import { IUser } from '@models/user'
 import { Schema } from 'mongoose'
+import { IPrompt } from '@models/prompt'
 
 interface Params {
-  post: Post
+  post: IPrompt
   desc: string
   handleTagClick: (tag: string) => void
-  handleEdit: (post: Post) => void
-  handleDelete: (post: Post) => Promise<void>
+  handleEdit: (post: IPrompt) => void
+  handleDelete: (post: IPrompt) => Promise<void>
 }
 
 const PromptCard = ({

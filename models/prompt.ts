@@ -1,7 +1,9 @@
 import { Model, Schema, model, models } from 'mongoose'
+import { IUser } from './user'
 
-export interface IPrompt extends Document {
-  creator: Schema.Types.ObjectId
+export interface IPrompt {
+  _id: Schema.Types.ObjectId
+  creator: IUser
   prompt: string
   tag: string
 }

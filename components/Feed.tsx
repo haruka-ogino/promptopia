@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import PromptCard from './PromptCard'
-import Prompt, { IPrompt, Post } from '@models/prompt'
+import Prompt, { IPrompt } from '@models/prompt'
 
 interface Params {
-  data: Post[]
+  data: IPrompt[]
   handleTagClick: () => void
 }
 
@@ -40,7 +40,7 @@ const Feed = () => {
     fetchPosts()
   }, [])
 
-  function filterPrompts(search) {
+  function filterPrompts(search: string) {
     const regex = new RegExp(search, 'i')
     return posts.filter(
       (item) =>
