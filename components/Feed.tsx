@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import PromptCard from './PromptCard'
 import Prompt, { IPrompt } from '@models/prompt'
 
@@ -27,8 +27,10 @@ const Feed = () => {
   const [posts, setPosts] = useState<IPrompt[]>([])
 
   const [searchText, setSearchText] = useState('')
-  const [searchTimeout, setSearchTimeout] = useState(null)
-  const [searchResults, setSearchResults] = useState([])
+  const [searchTimeout, setSearchTimeout] = useState<number | undefined>(
+    undefined
+  )
+  const [searchResults, setSearchResults] = useState<IPrompt[]>([])
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -50,18 +52,18 @@ const Feed = () => {
     )
   }
 
-  // function handleSearchChange(e) {
-  //   clearTimeout(searchTimeout)
-  //   setSearchText(e.target.value)
+  function handleSearchChange(e: ChangeEvent<HTMLInputElement>): void {
+    clearTimeout(searchTimeout)
+    setSearchText(e.target.value)
 
-  //   // debounce method
-  //   setSearchTimeout(
-  //     setTimeout(() => {
-  //       const searchResult = filterPrompts(e.target.value)
-  //       setSearchedResults(searchResult)
-  //     }, 500)
-  //   )
-  // }
+    // debounce method
+    setSearchTimeout(
+      window.setTimeout(() => {
+        const result = filterPrompts(e.target.value)
+        setSearchResults(result)
+      }, 500)
+    )
+  }
 
   return (
     <section className="feed">
@@ -70,7 +72,7 @@ const Feed = () => {
           type="text"
           placeholder="Search for a tag or username"
           value={searchText}
-          // onChange={handleSearchChange}
+          onChange={handleSearchChange}
           className="search_input peer"
           required
         />
