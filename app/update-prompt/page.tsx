@@ -39,7 +39,7 @@ function UpdatePrompt() {
     e.preventDefault()
     setSubmitting(true)
 
-    if (promptId) return alert('Prompt not found')
+    if (!promptId) return alert('Prompt ID not found')
 
     try {
       const res = await fetch(`/api/prompt/${promptId}`, {
