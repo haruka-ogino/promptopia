@@ -1,10 +1,9 @@
 'use client'
 
-import { ChangeEvent, useState, useEffect } from 'react'
+import { ChangeEvent, useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import Form from '@components/Form'
-import React from 'react'
 
 function UpdatePrompt() {
   const router = useRouter()
@@ -62,7 +61,7 @@ function UpdatePrompt() {
   }
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Form
         type="Edit"
         post={post}
@@ -70,7 +69,7 @@ function UpdatePrompt() {
         submitting={submitting}
         handleSubmit={updatePrompt}
       />
-    </React.Suspense>
+    </Suspense>
   )
 }
 
