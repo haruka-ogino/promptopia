@@ -4,12 +4,10 @@ import { ChangeEvent, useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import Form from '@components/Form'
+import React from 'react'
 
 function UpdatePrompt() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const promptId = searchParams.get('id')
-
   const [submitting, setSubmitting] = useState(false)
 
   const [post, setPost] = useState({
@@ -17,12 +15,22 @@ function UpdatePrompt() {
     tag: '',
   })
 
+  const searchParams = useSearchParams()
+  const promptId = searchParams.get('id')
+
   useEffect(() => {
     const getPromptDetails = async () => {
-      const res = await fetch(`/api/prompt/${promptId}`)
-      const data = await res.json()
-
-      setPost({ prompt: data.prompt, tag: data.tag })
+      try {
+        const res = await fetch(`/api/prompt/${promptId}`)
+        if (res.ok) {
+          const data = await res.json()
+          setPost({ prompt: data.prompt, tag: data.tag })
+        } else {
+          throw new Error('Failed to fetch prompt details')
+        }
+      } catch (error) {
+        console.error('Error fetching prompt details:', error)
+      }
     }
 
     if (promptId) getPromptDetails()
@@ -54,13 +62,15 @@ function UpdatePrompt() {
   }
 
   return (
-    <Form
-      type="Edit"
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      handleSubmit={updatePrompt}
-    />
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <Form
+        type="Edit"
+        post={post}
+        setPost={setPost}
+        submitting={submitting}
+        handleSubmit={updatePrompt}
+      />
+    </React.Suspense>
   )
 }
 
