@@ -15,6 +15,9 @@ interface RootLayoutProps {
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml" />
+      </head>
       <body>
         <Provider session={undefined}>
           <div className="main">
